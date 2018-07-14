@@ -1,0 +1,27 @@
+ELK
+
+logstash:
+input {
+  stdin {
+    file => "/path/to/log_file"
+    start_position => "beginning"
+    "sincedb_path" => "/dev/null"
+  }
+}
+
+filter {
+  grok {
+    match => {"message" => "(?<mydate>[1-9][0-9]{3}-[0-9]{2}\|[0-9]{2}:[0-9]{2}:[0-9]{2})"}
+  }
+  date {
+    match => ["mydate", "YYYY-MM-dd|HH:mm:ss", "MMM d HH:mm:ss", "MMM dd  HH:mm:ss", "ISO8601"]
+    target => "@timestamp"
+  }
+}
+
+output {
+  file {
+    path => "/path/to/output_file"
+    codec => "rubydebug"
+  }
+}
