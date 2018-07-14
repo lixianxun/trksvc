@@ -3,6 +3,7 @@ commands:
 ./kafka-console-consumer.sh --zookeeper $ip --topic $topic
 ./kafka-topics.sh --zookeeper $ip --list / --describe
 ./kafka-topics.sh --zookeeper $ip --create --topic $topic --partitions 1 --replication-factor 1
+./kafka-consumer-groups.sh --bootstrap-server $server --describe --group $group
 
 ./kafka-reassign-partitions.sh --zookeeper $ip --reassignment-json-file $json_file --execute
 
