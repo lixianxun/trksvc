@@ -1,0 +1,1 @@
+set hive.auto.convert.join=false
