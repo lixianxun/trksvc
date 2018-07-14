@@ -1,0 +1,42 @@
+flume:
+bin/flume-ng agent -c conf -f conf/$conf.properties -n $name -Dflume.monitoring.type=http -Dflume.monitoring.port=$port
+
+org.apache.flume.node.Application
+EventBus eb = new EventBus(agentName + "-event-bus");
+application = new Application(components);
+eb.register(application");
+
+//life cycle component to run
+now PollingPropertiesFileConfigurationProvider(agentName, configurationFile, eventBus, 30);
+
+loadChannels(agentConf, channelComponentMap);
+loadSources(agentConf, channelComponentMap, sourceRunnerMap);
+loaderSinks(agentConf, channelComponentMap, sinkRunnerMap);
+
+
+conf example:
+$name.sources=source1
+$name.channels=channel1
+$name.sinks=sink1
+
+$name.sources.source1.type=org.apache.flume.source.kafka.KafkaSource
+$name.sources.source1.batchSize=50
+$name.sources.source1.batchDurationMillis=2000
+$name.sources.source1.kafka.bootstrap.servers=$servers
+$name.sources.source1.kafka.topics=$topic
+$name.sources.source1.kafka.consumer.group.id=$groupid
+$name.sources.source1.channels=channel1
+
+$name.channels.channel1.type=memory
+$name.channels.capacity=1000
+$name.channels.transactionCapacity=100
+
+$name.sinks.sink1.channel=channel1
+$name.sinks.sink1.type=org.apache.flume.sink.kafka.KafkaSink
+$name.sinks.sink1.kafka.topic=$topic
+$name.sinks.sink1.kafka.bootstrap.servers=$server
+$name.sinks.sink1.kafka.flumeBatchSize=20
+$name.sinks.sink1.kafka.producer.acks=1
+$name.sinks.sink1.kafka.producer.linger.ms=1
+
+
