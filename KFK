@@ -1,0 +1,16 @@
+commands:
+./kafka-console-producer.sh --broker-list $ip --topic $topic --property "parse.key=true" --property "key.separator=:"
+./kafka-console-consumer.sh --zookeeper $ip --topic $topic
+./kafka-topics.sh --zookeeper $ip --list / --describe
+./kafka-topics.sh --zookeeper $ip --create --topic $topic --partitions 1 --replication-factor 1
+
+./kafka-reassign-partitions.sh --zookeeper $ip --reassignment-json-file $json_file --execute
+
+{
+  "version" : 1,
+  "partitions" : [
+    {"topic":"$t1", "partition":0, "replicas":[0,1]},
+    {"topic":"$t1", "partition":1, "replicas":[0,1]},
+    {"topic":"$t2", "partition":0, "replicas":[0,1]},
+    {"topic":"$t2", "partition":1, "replicas":[0,1]}
+}
