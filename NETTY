@@ -1,0 +1,18 @@
+https://segmentfault.com/a/1190000007282628
+https://dirtysalt.github.io/html/netty.html
+https://github.com/code4craft/netty-learning
+https://www.infoq.com/cn/articles/netty-high-performance
+http://xw-z1985.iteye.com/blog/1918052
+
+1. EventLoopGroup sg = new NioEventLoopGroup();
+  1. MultithreadEventExecutorGroup //its a ScheduleExecutorService(8, null, DefaultEventExecutorChooserFactory, KQueueSelectorProvider, DefaultSelectStrategyFactory, RejectedExecutionHandler]);
+2. EventLoopGroup childrenGroup = new NioEventLoopGroup();
+3. ServerBootstrap bootstrap = new ServerBootstrap();
+4. bootstrap.group(serverGroup, childGroup);
+5. .channel(NioServerSocketChannel.class);
+6. .childHandler(new ChannelInitialize<SocketChannel>();
+7. ChannelFuture f = bootstrap.bind(port).sync();
+  7.1 doBind: ChannelFuture regFuture=config().group().register(channel);
+      next().register(channel);
+        doStartThread()
+        runAllTasks(long timeoutNanos)
