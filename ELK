@@ -1,4 +1,4 @@
-ELK
+ELK:::
 
 logstash:
 input {
@@ -25,3 +25,14 @@ output {
     codec => "rubydebug"
   }
 }
+
+
+elasticsearch:::
+curl -XPOST localhost:9200/twitter/tweed/1 -H 'Content-Type:application/json' -d '{
+  "user": "oveits",
+  "message": "this is my second elasticsearch message",
+  "postDate": "2018-11-18T15:55:00"
+}'
+
+curl -XGET http://localhost:9200/twitter/tweed/1
+curl -XGET http://localhost:9200/twitter/_search?q=message:elasticsearch
